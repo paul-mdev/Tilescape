@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b1ep4ql55hbdk"
+path="res://.godot/imported/Nocturne C# minor.wav-0f6dde568d7f561b5796fa005bf4e799.sample"
+
+[deps]
+
+source_file="res://audio/music/Nocturne C# minor.wav"
+dest_files=["res://.godot/imported/Nocturne C# minor.wav-0f6dde568d7f561b5796fa005bf4e799.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

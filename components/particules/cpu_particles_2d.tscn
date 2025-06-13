@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvbqexq14ve4x"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7k2ao"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_v1dbg"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_7k2ao")
+position = Vector2(0, 10)
+amount = 100
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+scale_amount_max = 4.0
+color_ramp = SubResource("Gradient_v1dbg")

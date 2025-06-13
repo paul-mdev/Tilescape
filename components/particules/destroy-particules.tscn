@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx1jram134ovt"]
+
+[ext_resource type="Script" path="res://components/particules/destroy-particules.gd" id="1_bro50"]
+
+[sub_resource type="Gradient" id="Gradient_4k0ix"]
+colors = PackedColorArray(0.431373, 0.431373, 0.431373, 1, 0, 0, 0, 1)
+
+[node name="DestroyParticules" type="CPUParticles2D"]
+amount = 50
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 5.0
+spread = 180.0
+gravity = Vector2(0, 98)
+initial_velocity_max = 100.0
+color_initial_ramp = SubResource("Gradient_4k0ix")
+script = ExtResource("1_bro50")

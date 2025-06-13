@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba71dmhlyf30q"]
+
+[ext_resource type="Material" uid="uid://ntw6peel2gqa" path="res://world_gen/chunk_background_overlay/sky.tres" id="1_4nd4a"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fa80l"]
+
+[node name="Sky" type="Sprite2D"]
+visible = false
+z_index = -100
+material = ExtResource("1_4nd4a")
+texture = SubResource("NoiseTexture2D_fa80l")
+centered = false

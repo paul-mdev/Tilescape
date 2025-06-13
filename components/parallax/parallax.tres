@@ -1,0 +1,62 @@
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://gxwwea18e2gx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5i4t3"]
+region = Rect2(0, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_meadu"]
+region = Rect2(40, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oi3n7"]
+region = Rect2(80, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymp3p"]
+region = Rect2(120, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8eku"]
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmg7i"]
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gk48w"]
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gagsk"]
+region = Rect2(120, 0, 40, 40)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5i4t3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_meadu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oi3n7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymp3p")
+}],
+"loop": true,
+"name": &"cheminée",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8eku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmg7i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gk48w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gagsk")
+}],
+"loop": true,
+"name": &"volcan",
+"speed": 2.0
+}]

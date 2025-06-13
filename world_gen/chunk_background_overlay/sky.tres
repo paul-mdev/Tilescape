@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://ntw6peel2gqa"]
+
+[ext_resource type="Shader" path="res://shaders/light_2d.gdshader" id="1_0asdo"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lj6uu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_87yop"]
+width = 32
+height = 32
+noise = SubResource("FastNoiseLite_lj6uu")
+
+[resource]
+shader = ExtResource("1_0asdo")
+shader_parameter/light_color = Vector3(255, 255, 255)
+shader_parameter/brightness = 1.0
+shader_parameter/attenuation_strength = 0.25
+shader_parameter/intensity = 1.0
+shader_parameter/max_brightness = 1.0
+shader_parameter/light_texture = SubResource("NoiseTexture2D_87yop")

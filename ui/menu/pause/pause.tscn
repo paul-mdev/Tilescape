@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=3 uid="uid://bu3hs2ksas03m"]
+
+[ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="1_0nfte"]
+[ext_resource type="Script" path="res://ui/menu/pause/pause.gd" id="1_a3elu"]
+[ext_resource type="PackedScene" uid="uid://ctphpuncleji7" path="res://ui/background/background.tscn" id="2_qarx0"]
+[ext_resource type="PackedScene" uid="uid://vmc4p4w4m8mx" path="res://ui/themes/title.tscn" id="4_s2ko8"]
+
+[node name="Pause" type="Control"]
+process_mode = 3
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_0nfte")
+script = ExtResource("1_a3elu")
+
+[node name="UI-Background" parent="." instance=ExtResource("2_qarx0")]
+layout_mode = 1
+
+[node name="PauseMenuContent" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -204.0
+offset_right = 196.0
+offset_bottom = 204.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Title" parent="PauseMenuContent" instance=ExtResource("4_s2ko8")]
+layout_mode = 2
+text = "Parameters"
+
+[node name="GameButton" type="Button" parent="PauseMenuContent"]
+layout_mode = 2
+text = "Game"
+
+[node name="AudioButton" type="Button" parent="PauseMenuContent"]
+layout_mode = 2
+text = "Audio"
+
+[node name="VideoButton" type="Button" parent="PauseMenuContent"]
+layout_mode = 2
+text = "Video
+"
+
+[node name="RemapButton" type="Button" parent="PauseMenuContent"]
+layout_mode = 2
+text = "Remap
+"
+
+[node name="Label2" type="Label" parent="PauseMenuContent"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenuContent"]
+layout_mode = 2
+alignment = 1
+
+[node name="Back" type="Button" parent="PauseMenuContent/HBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="SaveBtn" type="Button" parent="PauseMenuContent/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Save and quit"
+
+[connection signal="pressed" from="PauseMenuContent/AudioButton" to="." method="_on_audio_button_pressed"]
+[connection signal="pressed" from="PauseMenuContent/VideoButton" to="." method="_on_video_button_pressed"]
+[connection signal="pressed" from="PauseMenuContent/RemapButton" to="." method="_on_remap_button_pressed"]
+[connection signal="pressed" from="PauseMenuContent/HBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="PauseMenuContent/HBoxContainer/SaveBtn" to="." method="_on_save_btn_pressed"]

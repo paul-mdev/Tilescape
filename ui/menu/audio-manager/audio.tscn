@@ -1,0 +1,102 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck3randnuvrha"]
+
+[ext_resource type="Script" path="res://ui/menu/audio-manager/audio.gd" id="1_8jk4h"]
+[ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="1_fifqc"]
+[ext_resource type="PackedScene" uid="uid://vmc4p4w4m8mx" path="res://ui/themes/title.tscn" id="4_2eisk"]
+
+[node name="Audio" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fifqc")
+script = ExtResource("1_8jk4h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -357.5
+offset_top = -193.0
+offset_right = 357.5
+offset_bottom = 193.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" parent="VBoxContainer" instance=ExtResource("4_2eisk")]
+layout_mode = 2
+text = "Audio
+"
+
+[node name="AudioGridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 3
+
+[node name="MasterLabel" type="Label" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="HSliderMaster" type="HSlider" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 10.0
+value = 10.0
+
+[node name="MasterVolume" type="Label" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+text = "10"
+horizontal_alignment = 1
+
+[node name="SoundLabel" type="Label" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+text = "Sound Volume"
+horizontal_alignment = 1
+
+[node name="HSliderSound" type="HSlider" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 10.0
+value = 10.0
+
+[node name="SoundVolume" type="Label" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+text = "10
+"
+horizontal_alignment = 1
+
+[node name="MusicLabel" type="Label" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+text = "Music Volume"
+horizontal_alignment = 1
+
+[node name="HSliderMusic" type="HSlider" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+max_value = 10.0
+value = 10.0
+
+[node name="MusicVolume" type="Label" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+text = "10
+"
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="value_changed" from="VBoxContainer/AudioGridContainer/HSliderMaster" to="." method="_on_h_slider_master_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/AudioGridContainer/HSliderSound" to="." method="_on_h_slider_sound_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/AudioGridContainer/HSliderMusic" to="." method="_on_h_slider_music_value_changed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

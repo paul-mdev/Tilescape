@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfu8o0leat1f4"]
+
+[ext_resource type="Script" path="res://entities/chest/chest-manager.gd" id="1_vfav2"]
+
+[node name="ChestManager" type="Control" node_paths=PackedStringArray("inventory")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_vfav2")
+inventory = NodePath("ChestInventory")
+
+[node name="ChestInventory" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3

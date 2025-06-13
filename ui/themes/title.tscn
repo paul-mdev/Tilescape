@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://vmc4p4w4m8mx"]
+
+[ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="1_xtfi6"]
+[ext_resource type="Script" path="res://ui/themes/title.gd" id="2_qe54t"]
+
+[node name="Title" type="Label"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 64.0
+offset_right = 320.0
+offset_bottom = 147.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme = ExtResource("1_xtfi6")
+theme_override_font_sizes/font_size = 40
+text = "Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_qe54t")

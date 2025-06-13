@@ -1,0 +1,260 @@
+[gd_scene load_steps=19 format=3 uid="uid://b6k44bqvhobjq"]
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_rfnog"]
+[ext_resource type="Texture2D" uid="uid://b6ata43i68r8q" path="res://sprites/chester.png" id="3_jfiyt"]
+[ext_resource type="Texture2D" uid="uid://6vii4tv2phfn" path="res://inventory/items/stick.png" id="3_ugy50"]
+[ext_resource type="Script" path="res://components/Camera2D.gd" id="4_7m2mk"]
+[ext_resource type="FontFile" uid="uid://clbw7k6jvgucq" path="res://ui/fonts/paul-maillard-font.ttf" id="5_52pwh"]
+[ext_resource type="Script" path="res://entities/player/collision_polygon_2d.gd" id="5_yusv7"]
+[ext_resource type="PackedScene" uid="uid://coc4euox782dy" path="res://components/dash/dash.tscn" id="6_w0es3"]
+[ext_resource type="Script" path="res://inventory/hand.gd" id="7_i6fk6"]
+[ext_resource type="AudioStream" uid="uid://d4llacoa5hp8i" path="res://audio/sound/foot-steps.wav" id="9_tk2qb"]
+[ext_resource type="PackedScene" uid="uid://bvbqexq14ve4x" path="res://components/particules/cpu_particles_2d.tscn" id="9_yghb1"]
+[ext_resource type="Script" path="res://entities/player/action_bar.gd" id="10_ynsfu"]
+[ext_resource type="PackedScene" uid="uid://dicwosdd6c0hw" path="res://inventory/slot/slot.tscn" id="11_xwqxg"]
+[ext_resource type="Resource" uid="uid://bvjh5cknegwt0" path="res://inventory/resources/teleportation_rod.tres" id="13_hcimn"]
+
+[sub_resource type="Animation" id="Animation_dlypd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vqcat"]
+resource_name = "afk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_47kjm"]
+resource_name = "left"
+length = 0.9
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hand:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-7, -5), Vector2(-7, -6), Vector2(-7, -7), Vector2(-7, -5), Vector2(-7, -6), Vector2(-7, -7)]
+}
+
+[sub_resource type="Animation" id="Animation_wwrnh"]
+resource_name = "right"
+length = 0.9
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hand:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(7, -5), Vector2(7, -6), Vector2(7, -7), Vector2(7, -5), Vector2(7, -6), Vector2(7, -7)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m0due"]
+_data = {
+"RESET": SubResource("Animation_dlypd"),
+"afk": SubResource("Animation_vqcat"),
+"left": SubResource("Animation_47kjm"),
+"right": SubResource("Animation_wwrnh")
+}
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hotbar")]
+z_index = 1
+script = ExtResource("1_rfnog")
+hotbar = NodePath("UI/ActionBar")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("4_7m2mk")
+small_zoom_value = 3.0
+medium_zoom_value = 0.5
+big_zoom_value = 0.1
+
+[node name="Dialogue" type="Label" parent="."]
+z_index = 5
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -21.0
+offset_right = 20.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("5_52pwh")
+theme_override_font_sizes/font_size = 8
+text = "Paul"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_m0due")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(0, -8)
+texture = ExtResource("3_jfiyt")
+flip_h = true
+hframes = 3
+vframes = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-4, 0, 4, 0, 4, -7, -4, -7)
+script = ExtResource("5_yusv7")
+
+[node name="CollisionPolygon2DAfk" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-4, 0, -4, -6, 4, -6, 4, 0)
+
+[node name="Hand" type="Sprite2D" parent="."]
+position = Vector2(7, -4)
+texture = ExtResource("3_ugy50")
+script = ExtResource("7_i6fk6")
+
+[node name="Dash" parent="." instance=ExtResource("6_w0es3")]
+position = Vector2(0, -1)
+
+[node name="Camera2DBatch" type="Camera2D" parent="."]
+z_index = 50
+script = ExtResource("4_7m2mk")
+
+[node name="AudioFootsteps" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_tk2qb")
+volume_db = 16.0
+bus = &"Sound"
+
+[node name="CPUParticles2D" parent="." instance=ExtResource("9_yghb1")]
+visible = false
+position = Vector2(0, -3)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ActionBar" type="HBoxContainer" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -528.0
+offset_top = -114.0
+offset_right = 528.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+script = ExtResource("10_ynsfu")
+
+[node name="Slot" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot2" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+item = ExtResource("13_hcimn")
+
+[node name="Slot3" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot4" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot5" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot6" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot7" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot8" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot9" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Slot10" parent="UI/ActionBar" instance=ExtResource("11_xwqxg")]
+layout_mode = 2
+
+[node name="Items" type="Node2D" parent="."]
+
+[connection signal="draw" from="Camera2DBatch" to="Camera2DBatch" method="_on_draw"]
+[connection signal="item_rect_changed" from="Camera2DBatch" to="Camera2DBatch" method="_on_item_rect_changed"]

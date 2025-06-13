@@ -1,0 +1,232 @@
+[gd_scene load_steps=10 format=3 uid="uid://buvno34ekq64y"]
+
+[ext_resource type="Script" path="res://ui/menu/menu.gd" id="1_ep3bd"]
+[ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="1_ihway"]
+[ext_resource type="PackedScene" uid="uid://ctphpuncleji7" path="res://ui/background/background.tscn" id="2_i4gdm"]
+[ext_resource type="FontFile" uid="uid://clbw7k6jvgucq" path="res://ui/fonts/paul-maillard-font.ttf" id="3_4nfe4"]
+[ext_resource type="AudioStream" uid="uid://dg21vbrfhagb4" path="res://audio/music/tya-heal-my-soul.wav" id="4_bkdfe"]
+[ext_resource type="PackedScene" uid="uid://dgqb404fupsdg" path="res://components/particules/ascend_particules.tscn" id="5_jwo6w"]
+[ext_resource type="PackedScene" uid="uid://vmc4p4w4m8mx" path="res://ui/themes/title.tscn" id="8_0w56l"]
+[ext_resource type="Script" path="res://ui/world/world_list.gd" id="8_a5f6u"]
+
+[sub_resource type="Environment" id="Environment_41eou"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 4.0
+glow_strength = 0.33
+glow_bloom = 1.0
+glow_blend_mode = 1
+
+[node name="MenuManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_ihway")
+script = ExtResource("1_ep3bd")
+default_color = Color(1, 1, 1, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_41eou")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_bkdfe")
+bus = &"Music"
+
+[node name="UI-Background" parent="." instance=ExtResource("2_i4gdm")]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 1
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.5
+offset_right = 96.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Title" parent="VBoxContainer" instance=ExtResource("8_0w56l")]
+layout_mode = 2
+text = "Voxel"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Menu" type="VBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/separation = 10
+
+[node name="PlayBtn" type="Button" parent="VBoxContainer/Menu"]
+layout_mode = 2
+text = "Play"
+
+[node name="ParametersBtn" type="Button" parent="VBoxContainer/Menu"]
+layout_mode = 2
+text = "Parameters"
+
+[node name="QuitBtn" type="Button" parent="VBoxContainer/Menu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="GenerateWorld" type="VBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="WorldBoxContainer" type="HBoxContainer" parent="VBoxContainer/GenerateWorld"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="WorldNameLbl" type="Label" parent="VBoxContainer/GenerateWorld/WorldBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Name"
+
+[node name="WorldNameTextEdit" type="TextEdit" parent="VBoxContainer/GenerateWorld/WorldBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New World"
+placeholder_text = "World name"
+scroll_fit_content_height = true
+
+[node name="SeedBoxContainer" type="HBoxContainer" parent="VBoxContainer/GenerateWorld"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SeedLbl" type="Label" parent="VBoxContainer/GenerateWorld/SeedBoxContainer"]
+layout_mode = 2
+text = "Seed"
+horizontal_alignment = 1
+
+[node name="SeedTextEdit" type="TextEdit" parent="VBoxContainer/GenerateWorld/SeedBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Generation seed"
+scroll_fit_content_height = true
+
+[node name="GenerateWorldBtn" type="Button" parent="VBoxContainer/GenerateWorld"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4nfe4")
+theme_override_font_sizes/font_size = 25
+text = "Generate new world"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/GenerateWorld"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 100
+
+[node name="GenerateCancelBtn" type="Button" parent="VBoxContainer/GenerateWorld/HBoxContainer2"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="PlayWorld" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PlayWorld"]
+custom_minimum_size = Vector2(600, 100)
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="WorldList" type="VBoxContainer" parent="VBoxContainer/PlayWorld/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("8_a5f6u")
+
+[node name="GenerateBtn" type="Button" parent="VBoxContainer/PlayWorld"]
+layout_mode = 2
+text = "Generate a new world"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/PlayWorld"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 100
+
+[node name="PlayWorldBtn" type="Button" parent="VBoxContainer/PlayWorld/HBoxContainer2"]
+layout_mode = 2
+text = "Play"
+
+[node name="PlayCancelBtn" type="Button" parent="VBoxContainer/PlayWorld/HBoxContainer2"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="VBoxContainer2" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 544.0
+offset_top = 448.0
+offset_right = 683.0
+offset_bottom = 507.0
+
+[node name="Button" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+text = "1"
+
+[node name="Button2" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+text = "2"
+
+[node name="Button3" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+text = "3"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="particules" parent="Control" instance=ExtResource("5_jwo6w")]
+process_mode = 3
+top_level = true
+z_index = 3
+position = Vector2(640, 736)
+emission_rect_extents = Vector2(700, 1)
+
+[connection signal="pressed" from="VBoxContainer/Menu/PlayBtn" to="." method="_on_play_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/Menu/ParametersBtn" to="." method="_on_parameters_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/Menu/QuitBtn" to="." method="_on_quit_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/GenerateWorld/GenerateWorldBtn" to="." method="_on_generate_world_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/GenerateWorld/HBoxContainer2/GenerateCancelBtn" to="." method="_on_generate_cancel_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/PlayWorld/GenerateBtn" to="." method="_on_generate_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/PlayWorld/HBoxContainer2/PlayWorldBtn" to="VBoxContainer/PlayWorld" method="_on_play_world_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/PlayWorld/HBoxContainer2/PlayCancelBtn" to="." method="_on_play_cancel_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer2/Button3" to="." method="_on_button_3_pressed"]

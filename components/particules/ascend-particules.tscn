@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgqb404fupsdg"]
+
+[sub_resource type="Gradient" id="Gradient_3vwfw"]
+offsets = PackedFloat32Array(0, 0.714894)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.709804)
+
+[node name="particules" type="CPUParticles2D"]
+z_index = -1
+amount = 1000
+lifetime = 15.0
+preprocess = 50.0
+speed_scale = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(1800, 1)
+gravity = Vector2(0, -20)
+initial_velocity_max = 1.0
+angular_velocity_min = -0.1
+angular_velocity_max = 0.1
+linear_accel_min = -10.0
+linear_accel_max = 50.0
+scale_amount_min = 0.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_3vwfw")

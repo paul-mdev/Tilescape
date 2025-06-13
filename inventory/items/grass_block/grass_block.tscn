@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsktw131wl4gh"]
+
+[ext_resource type="PackedScene" uid="uid://bu34pdbchis48" path="res://inventory/dropped-item/dropped-item.tscn" id="1_3x3y7"]
+[ext_resource type="Script" path="res://inventory/items/grass_block/grass_block.gd" id="2_sawm1"]
+
+[node name="GrassBlock" instance=ExtResource("1_3x3y7")]
+script = ExtResource("2_sawm1")
+
+[node name="Timer" type="Timer" parent="." index="1"]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

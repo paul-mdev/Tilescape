@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu34pdbchis48"]
+
+[ext_resource type="Script" path="res://inventory/dropped-item/dropped-item.gd" id="1_4dws8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x8l3b"]
+size = Vector2(16, 16)
+
+[node name="DroppedItem" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+centered = false
+script = ExtResource("1_4dws8")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_x8l3b")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

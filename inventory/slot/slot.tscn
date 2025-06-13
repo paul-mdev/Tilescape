@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://dicwosdd6c0hw"]
+
+[ext_resource type="Script" path="res://inventory/slot/slot.gd" id="1_qv3no"]
+[ext_resource type="Texture2D" uid="uid://becwb6tgo48fh" path="res://inventory/slot/slot.png" id="2_irevp"]
+[ext_resource type="Texture2D" uid="uid://d2xud4xlt101j" path="res://sprites/autotile/autotile.png" id="3_6wh1a"]
+[ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="3_082n4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssapu"]
+atlas = ExtResource("3_6wh1a")
+region = Rect2(192, 176, 16, 16)
+
+[node name="Slot" type="Button"]
+custom_minimum_size = Vector2(96, 96)
+offset_right = 96.0
+offset_bottom = 96.0
+focus_mode = 1
+flat = true
+script = ExtResource("1_qv3no")
+
+[node name="SlotTexture" type="TextureRect" parent="."]
+z_index = -1
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("2_irevp")
+expand_mode = 1
+
+[node name="ItemTexture" type="TextureRect" parent="."]
+z_index = -1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 80.0
+offset_bottom = 80.0
+texture = SubResource("AtlasTexture_ssapu")
+expand_mode = 1
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 1
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 85.0
+offset_bottom = 90.0
+theme = ExtResource("3_082n4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 25
+text = "99"
+horizontal_alignment = 2
+vertical_alignment = 2

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="moon.svg"
+   inkscape:export-filename="moon.png"
+   inkscape:export-xdpi="60.48"
+   inkscape:export-ydpi="60.48"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.13118254"
+     inkscape:cx="350.65641"
+     inkscape:cy="956.68217"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="mix-blend-mode:darken;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:8;stroke-dasharray:none;stroke-opacity:1"
+       id="path3"
+       cx="383.84317"
+       cy="201.42548"
+       r="124.69238" />
+    <path
+       id="path1"
+       style="fill:#ffffff;fill-opacity:1;stroke:#4000f5;stroke-width:1.94003;stroke-dasharray:none;stroke-opacity:0"
+       d="m 380.71056,102.15489 a 97.001749,97.001749 0 0 0 -58.83611,20.18317 76.718086,76.718086 0 0 1 2.51337,-0.17945 76.718086,76.718086 0 0 1 76.71843,76.71842 76.718086,76.718086 0 0 1 -76.71843,76.71844 76.718086,76.718086 0 0 1 -3.33846,-0.2386 97.001749,97.001749 0 0 0 59.6612,20.8007 97.001749,97.001749 0 0 0 97.00083,-97.00084 97.001749,97.001749 0 0 0 -97.00083,-97.00184 z" />
+  </g>
+</svg>

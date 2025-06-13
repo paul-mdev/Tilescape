@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvnerkw81jp8g"]
+
+[ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="1_d3nmi"]
+[ext_resource type="Script" path="res://ui/menu/video-manager/video.gd" id="2_vg7rl"]
+[ext_resource type="PackedScene" uid="uid://vmc4p4w4m8mx" path="res://ui/themes/title.tscn" id="3_pnpps"]
+
+[node name="Video" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_d3nmi")
+script = ExtResource("2_vg7rl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -357.5
+offset_top = -193.0
+offset_right = 357.5
+offset_bottom = 193.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" parent="VBoxContainer" instance=ExtResource("3_pnpps")]
+layout_mode = 2
+text = "Video"
+
+[node name="AudioGridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+
+[node name="FullscreenBtn" type="CheckButton" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Fullscreen"
+
+[node name="DrawChunkBtn" type="CheckButton" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Draw chunk borders"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 300
+
+[node name="Label" type="Label" parent="VBoxContainer/AudioGridContainer/HBoxContainer"]
+layout_mode = 2
+text = "Render distance"
+
+[node name="RenderDistanceSpinBox" type="SpinBox" parent="VBoxContainer/AudioGridContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/AudioGridContainer/FullscreenBtn" to="." method="_on_fullscreen_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/AudioGridContainer/DrawChunkBtn" to="." method="_on_draw_chunk_btn_pressed"]
+[connection signal="changed" from="VBoxContainer/AudioGridContainer/HBoxContainer/RenderDistanceSpinBox" to="." method="_on_render_distance_spin_box_changed"]
+[connection signal="value_changed" from="VBoxContainer/AudioGridContainer/HBoxContainer/RenderDistanceSpinBox" to="." method="_on_render_distance_spin_box_value_changed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

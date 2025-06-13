@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://b7bh55w04dgqm"]
+
+[ext_resource type="Script" path="res://world_gen/procedural_generation.gd" id="1_y00cg"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xm3ac"]
+frequency = 0.008
+fractal_type = 2
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vpm5r"]
+noise = SubResource("FastNoiseLite_xm3ac")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lnd2o"]
+frequency = 0.0001
+fractal_type = 0
+domain_warp_enabled = true
+domain_warp_amplitude = 10.0
+domain_warp_fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4sq83"]
+noise = SubResource("FastNoiseLite_lnd2o")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bio6m"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_igmvl"]
+noise = SubResource("FastNoiseLite_bio6m")
+
+[node name="ProceduralGeneration" type="Node"]
+script = ExtResource("1_y00cg")
+
+[node name="cavern" type="Sprite2D" parent="."]
+position = Vector2(-512, -512)
+texture = SubResource("NoiseTexture2D_vpm5r")
+
+[node name="temperature" type="Sprite2D" parent="."]
+position = Vector2(-512, 0)
+texture = SubResource("NoiseTexture2D_4sq83")
+
+[node name="humidite" type="Sprite2D" parent="."]
+texture = SubResource("NoiseTexture2D_igmvl")

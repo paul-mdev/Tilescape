@@ -1,0 +1,262 @@
+[gd_scene load_steps=12 format=3 uid="uid://d261mcm473q6e"]
+
+[ext_resource type="Script" path="res://world_gen/world.gd" id="1_vkpxt"]
+[ext_resource type="PackedScene" uid="uid://b6k44bqvhobjq" path="res://entities/player/player.tscn" id="3_6sdrh"]
+[ext_resource type="Material" uid="uid://ntw6peel2gqa" path="res://world_gen/chunk_background_overlay/sky.tres" id="3_m8sdh"]
+[ext_resource type="Script" path="res://ui/information_display.gd" id="4_d1fl1"]
+[ext_resource type="PackedScene" uid="uid://b514i8xg6dhm" path="res://components/parallax/parallax.tscn" id="5_kwyip"]
+[ext_resource type="FontFile" uid="uid://clbw7k6jvgucq" path="res://ui/fonts/paul-maillard-font.ttf" id="6_myoup"]
+[ext_resource type="PackedScene" uid="uid://mqhl80mbq8gy" path="res://world_gen/tile_map.tscn" id="8_6xf3t"]
+[ext_resource type="AudioStream" uid="uid://ctooh5gp8xnu8" path="res://audio/music/the-end.wav" id="9_8esed"]
+[ext_resource type="PackedScene" uid="uid://crcktsmncty2h" path="res://components/interactable/interactable.tscn" id="11_rhy62"]
+[ext_resource type="Resource" uid="uid://ba4vltb8qk1jn" path="res://inventory/resources/chest.tres" id="11_xossa"]
+
+[sub_resource type="Environment" id="Environment_djtgi"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 4.0
+glow_strength = 0.33
+glow_bloom = 1.0
+
+[node name="World" type="Node2D"]
+process_mode = 1
+z_index = 1
+script = ExtResource("1_vkpxt")
+
+[node name="BackgroundCanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BackgroundSky" type="Panel" parent="BackgroundCanvasLayer"]
+z_index = -150
+material = ExtResource("3_m8sdh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TileMap" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_6xf3t")]
+z_as_relative = false
+player = NodePath("../Player")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="InformationDisplay" type="Control" parent="UI" node_paths=PackedStringArray("tilemap", "player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+script = ExtResource("4_d1fl1")
+tilemap = NodePath("../../TileMap")
+player = NodePath("../../Player")
+
+[node name="UsefulPanel" type="Panel" parent="UI/InformationDisplay"]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 80.0
+offset_bottom = 155.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Useful" type="VBoxContainer" parent="UI/InformationDisplay/UsefulPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 58.0
+offset_bottom = 76.0
+theme_override_constants/separation = 3
+
+[node name="CoordLbl" type="Label" parent="UI/InformationDisplay/UsefulPanel/Useful"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 10
+text = "0 x
+0 y"
+
+[node name="FpsLbl" type="Label" parent="UI/InformationDisplay/UsefulPanel/Useful"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 10
+text = "60 fps"
+
+[node name="ZoomLbl" type="Label" parent="UI/InformationDisplay/UsefulPanel/Useful"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 10
+text = "0.5 zoom"
+
+[node name="MouseCoordLbl" type="Label" parent="UI/InformationDisplay/UsefulPanel/Useful"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 10
+text = "0 x
+0 y"
+
+[node name="BlockLbl" type="Label" parent="UI/InformationDisplay/UsefulPanel/Useful"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 10
+text = "hover tile :
+(-1,-1) "
+
+[node name="InfosPanel" type="Panel" parent="UI/InformationDisplay"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 120.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="InfosLbl" type="Label" parent="UI/InformationDisplay/InfosPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 58.0
+offset_bottom = 35.0
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 10
+text = "0 Mo
+0 ms"
+
+[node name="InventoryPanel" type="Panel" parent="UI/InformationDisplay"]
+visible = false
+layout_mode = 0
+offset_left = 480.0
+offset_top = 16.0
+offset_right = 632.0
+offset_bottom = 48.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SlotContainer" type="GridContainer" parent="UI/InformationDisplay"]
+visible = false
+layout_mode = 0
+offset_left = 488.0
+offset_top = 8.0
+offset_right = 628.0
+offset_bottom = 56.0
+columns = 9
+
+[node name="Slot1" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot3" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot4" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot5" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot6" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot7" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot8" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot9" type="Label" parent="UI/InformationDisplay/SlotContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("6_myoup")
+theme_override_font_sizes/font_size = 15
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_djtgi")
+
+[node name="Parallax" parent="." instance=ExtResource("5_kwyip")]
+follow_viewport_enabled = false
+
+[node name="Player" parent="." instance=ExtResource("3_6sdrh")]
+position = Vector2(0, -3000)
+
+[node name="WorldMusic" type="AudioStreamPlayer2D" parent="Player"]
+process_mode = 3
+stream = ExtResource("9_8esed")
+volume_db = 7.0
+pitch_scale = 0.5
+autoplay = true
+bus = &"Music"
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Player"]
+position = Vector2(-416, 3032)
+rotation = -3.14159
+enabled = false
+shadow_enabled = true
+
+[node name="Interactable" parent="." instance=ExtResource("11_rhy62")]
+position = Vector2(39, -3002)
+item = ExtResource("11_xossa")

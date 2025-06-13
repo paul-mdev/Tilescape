@@ -1,0 +1,318 @@
+[gd_scene load_steps=36 format=3 uid="uid://b514i8xg6dhm"]
+
+[ext_resource type="Texture2D" uid="uid://cahu7e6qmtoo1" path="res://sprites/parallax/boat.png" id="1_2s5bm"]
+[ext_resource type="Texture2D" uid="uid://c3fr3i073287" path="res://sprites/parallax/M1_-5.png" id="1_5uics"]
+[ext_resource type="Texture2D" uid="uid://cbtp6ic3fn25x" path="res://sprites/parallax/cloud_back.png" id="2_p5xi3"]
+[ext_resource type="Texture2D" uid="uid://d1q15o1xrwlh5" path="res://sprites/parallax/cloud_front.png" id="3_qci2p"]
+[ext_resource type="Texture2D" uid="uid://dc5phbkmml6dk" path="res://sprites/bee.png" id="3_sas3b"]
+[ext_resource type="Texture2D" uid="uid://cnf5fhrjw3uwe" path="res://sprites/enemy.png" id="4_56xae"]
+[ext_resource type="Texture2D" uid="uid://cf5mn586mh6qo" path="res://sprites/coin/flying_coin_silver.png" id="4_exnu6"]
+[ext_resource type="Texture2D" uid="uid://62o8va6r364p" path="res://sprites/parallax/M1_-3.png" id="5_ef66l"]
+[ext_resource type="Texture2D" uid="uid://m720y5nwhf4m" path="res://sprites/platform.png" id="6_6wa72"]
+[ext_resource type="Texture2D" uid="uid://d4hk2vina70vp" path="res://sprites/smoke.png" id="7_ejuh7"]
+[ext_resource type="Texture2D" uid="uid://bu7faabeut4dp" path="res://sprites/parallax/M1_-1.png" id="7_sl3kl"]
+[ext_resource type="Shader" path="res://components/parallax/parallax.gdshader" id="7_uewu0"]
+[ext_resource type="SpriteFrames" uid="uid://gxwwea18e2gx" path="res://components/parallax/parallax.tres" id="13_qp7rw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcvet"]
+atlas = ExtResource("4_exnu6")
+region = Rect2(0, 0, 80, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfdsj"]
+atlas = ExtResource("4_exnu6")
+region = Rect2(0, 40, 80, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysmdx"]
+atlas = ExtResource("4_exnu6")
+region = Rect2(0, 80, 80, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4dx1"]
+atlas = ExtResource("4_exnu6")
+region = Rect2(0, 120, 80, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xfxn4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gcvet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfdsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysmdx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4dx1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cpqpi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqnga"]
+atlas = ExtResource("4_56xae")
+region = Rect2(0, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdfuf"]
+atlas = ExtResource("4_56xae")
+region = Rect2(40, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7d6vj"]
+atlas = ExtResource("4_56xae")
+region = Rect2(80, 80, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ry8o1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqnga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdfuf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7d6vj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lr2ae"]
+atlas = ExtResource("3_sas3b")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55tdc"]
+atlas = ExtResource("3_sas3b")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o63nv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lr2ae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55tdc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8jck"]
+atlas = ExtResource("6_6wa72")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftlqk"]
+atlas = ExtResource("6_6wa72")
+region = Rect2(0, 40, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7p85n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8jck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftlqk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pofia"]
+shader = ExtResource("7_uewu0")
+shader_parameter/green = Color(0, 0.839216, 0.34902, 1)
+shader_parameter/white = Color(1, 1, 1, 1)
+shader_parameter/black = null
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11x8u"]
+atlas = ExtResource("7_ejuh7")
+region = Rect2(0, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qyk3n"]
+atlas = ExtResource("7_ejuh7")
+region = Rect2(40, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8r325"]
+atlas = ExtResource("7_ejuh7")
+region = Rect2(80, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30kxb"]
+atlas = ExtResource("7_ejuh7")
+region = Rect2(0, 80, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l3fg0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11x8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qyk3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8r325")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30kxb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="Parallax" type="ParallaxBackground"]
+layer = -3
+follow_viewport_enabled = true
+
+[node name="-5" type="ParallaxLayer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.882353)
+position = Vector2(0, -150)
+motion_scale = Vector2(0.6, 0.6)
+motion_mirroring = Vector2(2100, 0)
+
+[node name="silver_flying_coin" type="AnimatedSprite2D" parent="-5"]
+modulate = Color(1, 1, 1, 0.784314)
+use_parent_material = true
+position = Vector2(900, 0)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_xfxn4")
+autoplay = "default"
+frame_progress = 0.462094
+
+[node name="Sprite2D2" type="Sprite2D" parent="-5"]
+modulate = Color(1, 1, 1, 0.784314)
+use_parent_material = true
+scale = Vector2(20, 20)
+texture = ExtResource("1_2s5bm")
+offset = Vector2(15, -4)
+
+[node name="Sprite2D" type="Sprite2D" parent="-5"]
+use_parent_material = true
+texture = ExtResource("1_5uics")
+
+[node name="bob" type="AnimatedSprite2D" parent="-5"]
+modulate = Color(1, 1, 1, 0.784314)
+material = SubResource("ShaderMaterial_cpqpi")
+position = Vector2(415, -132)
+sprite_frames = SubResource("SpriteFrames_ry8o1")
+autoplay = "default"
+frame_progress = 0.335986
+
+[node name="bee" type="AnimatedSprite2D" parent="-5"]
+modulate = Color(1, 1, 1, 0.784314)
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_o63nv")
+autoplay = "default"
+frame_progress = 0.857144
+
+[node name="platform" type="AnimatedSprite2D" parent="-5"]
+modulate = Color(1, 1, 1, 0.784314)
+use_parent_material = true
+position = Vector2(1307, -20)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_7p85n")
+autoplay = "default"
+frame_progress = 0.02647
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="-5"]
+material = SubResource("ShaderMaterial_pofia")
+position = Vector2(-364, -91)
+scale = Vector2(7, 7)
+sprite_frames = SubResource("SpriteFrames_l3fg0")
+autoplay = "default"
+frame_progress = 0.596546
+
+[node name="-4" type="ParallaxLayer" parent="."]
+modulate = Color(1, 1, 1, 0.784314)
+use_parent_material = true
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(2400, 2400)
+
+[node name="Sprite2D" type="Sprite2D" parent="-4"]
+use_parent_material = true
+scale = Vector2(2, 2)
+texture = ExtResource("2_p5xi3")
+
+[node name="-3" type="ParallaxLayer" parent="."]
+visible = false
+use_parent_material = true
+position = Vector2(0, -300)
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(2100, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="-3"]
+use_parent_material = true
+texture = ExtResource("5_ef66l")
+
+[node name="-2" type="ParallaxLayer" parent="."]
+visible = false
+use_parent_material = true
+position = Vector2(-1750, -196)
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(4200, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="-2"]
+use_parent_material = true
+texture = ExtResource("7_sl3kl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="-2"]
+position = Vector2(-1686, 24)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("13_qp7rw")
+animation = &"volcan"
+autoplay = "volcan"
+frame_progress = 0.330859
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="-2"]
+position = Vector2(-1542, 144)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("13_qp7rw")
+animation = &"cheminée"
+autoplay = "cheminée"
+frame_progress = 0.599936
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="-2"]
+position = Vector2(-942, 18)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("13_qp7rw")
+animation = &"cheminée"
+autoplay = "cheminée"
+frame_progress = 0.804697
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="-2"]
+position = Vector2(1050, 12)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("13_qp7rw")
+animation = &"cheminée"
+autoplay = "cheminée"
+frame_progress = 0.209688
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="-2"]
+position = Vector2(1614, -66)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("13_qp7rw")
+animation = &"cheminée"
+autoplay = "cheminée"
+frame_progress = 0.582646
+
+[node name="-1" type="ParallaxLayer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+z_index = -10
+use_parent_material = true
+motion_scale = Vector2(0.9, 0.9)
+motion_mirroring = Vector2(2400, 2400)
+
+[node name="Sprite2D" type="Sprite2D" parent="-1"]
+z_index = -10
+use_parent_material = true
+scale = Vector2(2, 2)
+texture = ExtResource("3_qci2p")

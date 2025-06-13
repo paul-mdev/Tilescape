@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=3 uid="uid://p523dokkr0dn"]
+
+[ext_resource type="Script" path="res://world_gen/procedural_generation.gd" id="1_y00cg"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xm3ac"]
+frequency = 0.02
+fractal_type = 2
+fractal_lacunarity = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vpm5r"]
+noise = SubResource("FastNoiseLite_xm3ac")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l2k7q"]
+noise_type = 0
+frequency = 0.001
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_biv01"]
+noise = SubResource("FastNoiseLite_l2k7q")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lnd2o"]
+frequency = 0.001
+fractal_type = 0
+domain_warp_enabled = true
+domain_warp_amplitude = 10.0
+domain_warp_fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4sq83"]
+noise = SubResource("FastNoiseLite_lnd2o")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bio6m"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_igmvl"]
+noise = SubResource("FastNoiseLite_bio6m")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vwkot"]
+frequency = 0.008
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bj80t"]
+noise = SubResource("FastNoiseLite_vwkot")
+
+[node name="ProceduralGeneration" type="Node"]
+script = ExtResource("1_y00cg")
+
+[node name="cool" type="Sprite2D" parent="."]
+position = Vector2(-512, -512)
+texture = SubResource("NoiseTexture2D_vpm5r")
+
+[node name="altitude" type="Sprite2D" parent="."]
+position = Vector2(0, -512)
+texture = SubResource("NoiseTexture2D_biv01")
+
+[node name="temperature" type="Sprite2D" parent="."]
+position = Vector2(-512, 0)
+texture = SubResource("NoiseTexture2D_4sq83")
+
+[node name="humidite" type="Sprite2D" parent="."]
+texture = SubResource("NoiseTexture2D_igmvl")
+
+[node name="cavern" type="Sprite2D" parent="."]
+position = Vector2(-1031, -1028)
+texture = SubResource("NoiseTexture2D_bj80t")

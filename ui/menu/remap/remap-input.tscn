@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2b2ymg27t5iq"]
+
+[ext_resource type="Script" path="res://ui/menu/remap/remap-input.gd" id="1_1lasm"]
+[ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="1_t8qt0"]
+[ext_resource type="PackedScene" uid="uid://vmc4p4w4m8mx" path="res://ui/themes/title.tscn" id="4_lr43g"]
+
+[node name="Remap Input" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_t8qt0")
+script = ExtResource("1_1lasm")
+action_items = Array[String](["move-left", "move-right", "jump", "dash"])
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -349.0
+offset_top = -110.0
+offset_right = 349.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" parent="ButtonsVBox" instance=ExtResource("4_lr43g")]
+layout_mode = 2
+text = "Remap"
+
+[node name="SettingsGridContainer" type="GridContainer" parent="ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 16
+columns = 2
+
+[node name="Label" type="Label" parent="ButtonsVBox/SettingsGridContainer"]
+visible = false
+layout_mode = 2
+text = "Action"
+
+[node name="Label2" type="Label" parent="ButtonsVBox/SettingsGridContainer"]
+visible = false
+layout_mode = 2
+text = "Remap"
+
+[node name="Back" type="Button" parent="ButtonsVBox"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="ButtonsVBox/Back" to="." method="_on_back_pressed"]

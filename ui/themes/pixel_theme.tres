@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://di5s5o2io4evk"]
+
+[ext_resource type="FontFile" uid="uid://clbw7k6jvgucq" path="res://ui/fonts/paul-maillard-font.ttf" id="1_h8amn"]
+
+[resource]
+default_font = ExtResource("1_h8amn")
+default_font_size = 22
+HBoxContainer/constants/separation = 20
+VBoxContainer/constants/separation = 15

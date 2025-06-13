@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://c31lcfgicaitv"]
+
+[ext_resource type="Script" path="res://inventory/item.gd" id="1_l1ju4"]
+[ext_resource type="Texture2D" uid="uid://d2xud4xlt101j" path="res://sprites/autotile/autotile.png" id="1_muotm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02xi0"]
+atlas = ExtResource("1_muotm")
+region = Rect2(0, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_l1ju4")
+icon = SubResource("AtlasTexture_02xi0")
+name = "Grass block"
+type = "Block"
+rarity = "Common"
+description = ""
