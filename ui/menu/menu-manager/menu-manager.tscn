@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://buvno34ekq64y"]
+[gd_scene load_steps=17 format=4 uid="uid://buvno34ekq64y"]
 
 [ext_resource type="Theme" uid="uid://di5s5o2io4evk" path="res://ui/themes/pixel_theme.tres" id="1_3qlej"]
 [ext_resource type="Script" path="res://ui/menu/menu-manager/menu-manager.gd" id="2_iubpq"]
@@ -25,7 +25,20 @@ glow_bloom = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f4vsl"]
 
-[node name="MenuManager" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ft2sx"]
+bg_color = Color(0.133, 0.133, 0.133, 0.589)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.765063, 0.858997, 0.17191, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="MenuManager" type="Control" node_paths=PackedStringArray("seed_box", "warning_message")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,6 +49,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_3qlej")
 script = ExtResource("2_iubpq")
+seed_box = NodePath("MenuContent/GenerateWorld/SeedBoxContainer/SeedBox")
+warning_message = NodePath("MenuContent/GenerateWorld/WarningMessage")
 default_color = Color(1, 1, 1, 1)
 
 [node name="BackgroundSky" parent="." instance=ExtResource("3_n7joi")]
@@ -98,6 +113,7 @@ custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [node name="Menu" type="HBoxContainer" parent="MenuContent"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/separation = 0
@@ -144,6 +160,13 @@ size_flags_horizontal = 3
 placeholder_text = "New world"
 scroll_fit_content_height = true
 
+[node name="WarningMessage" type="Label" parent="MenuContent/GenerateWorld"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.756863, 0.027451, 1)
+theme_override_font_sizes/font_size = 16
+text = "A world with this name already exists"
+autowrap_mode = 3
+
 [node name="SeedBoxContainer" type="HBoxContainer" parent="MenuContent/GenerateWorld"]
 layout_mode = 2
 alignment = 1
@@ -159,10 +182,6 @@ size_flags_horizontal = 3
 max_value = 1e+11
 alignment = 2
 
-[node name="CheckBox" type="CheckBox" parent="MenuContent/GenerateWorld/SeedBoxContainer"]
-layout_mode = 2
-text = "random"
-
 [node name="GenerateWorldBtn" type="Button" parent="MenuContent/GenerateWorld"]
 layout_mode = 2
 text = "Generate new world"
@@ -176,13 +195,12 @@ layout_mode = 2
 text = "Cancel"
 
 [node name="PlayWorld" type="VBoxContainer" parent="MenuContent"]
-visible = false
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MenuContent/PlayWorld"]
-custom_minimum_size = Vector2(600, 150)
+custom_minimum_size = Vector2(600, 215)
 layout_mode = 2
-size_flags_vertical = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_ft2sx")
 
 [node name="WorldList" type="VBoxContainer" parent="MenuContent/PlayWorld/ScrollContainer"]
 layout_mode = 2

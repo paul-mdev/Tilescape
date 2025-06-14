@@ -48,7 +48,7 @@ func _on_h_slider_music_value_changed(value : int) -> void:
 
 
 func _on_back_pressed() -> void:
-	Main.options["audio"] = audio
-	Main.save_options()
+	DataManager.options["audio"] = audio
+	DataManager.save_options()
 	emit_signal("display_pause_menu")
 	queue_free()

@@ -3,10 +3,10 @@ extends CollisionPolygon2D
 func _process(_delta: float) -> void:
 	queue_redraw()
 
-func _draw() -> void:
-	var bounding_box : Rect2 = get_collision_polygon_rect()
-	var local_rect : Rect2 = Rect2(to_local(bounding_box.position), bounding_box.size)
-	draw_rect(local_rect, Color(1, 0, 0), true)
+#func _draw() -> void:
+##	var bounding_box : Rect2 = get_collision_polygon_rect()
+#	var local_rect : Rect2 = Rect2(to_local(bounding_box.position), bounding_box.size)
+	#draw_rect(local_rect, Color(1, 0, 0), true)
 	
 func get_collision_polygon_rect() -> Rect2:
 	var global_points: Array = []

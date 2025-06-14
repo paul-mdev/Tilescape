@@ -18,8 +18,8 @@ func _physics_process(_delta : float) -> void:
 		
 		if collider.has_method('remove_health'):
 			collider.remove_health(1)
-		if collider.has_method('destroy_block'):
-			collider.destroy_block(global_position)
+		#if collider.has_method('destroy_block'):
+		#	collider.destroy_block(global_position)
 		#if collider.has_method('push_back'):
 		#	collider.push_back(direction*SPEED/4)
 		queue_free()

@@ -1,10 +1,10 @@
 extends TileMapLayer
 
 var TILES: Dictionary = Tiles.TILES
-const CELL_SIZE : int = 16
+const CELL_SIZE : int = Tiles.TILE_SIZE
 const CHUNK_SIZE : Vector2i = Vector2(16,16)
-var render_distance : int = Main.options["video"]["render_distance"]
-var draw_chunk_borders : bool = Main.options["video"]["draw_chunk_borders"]
+var render_distance : int = DataManager.options["video"]["render_distance"]
+var draw_chunk_borders : bool = DataManager.options["video"]["draw_chunk_borders"]
 var unload_margin : int = 2  # distance supplémentaire avant de décharger
 
 @export var player : Player
@@ -676,6 +676,7 @@ func place_block(coord : Vector2, tile : Tile) -> void:
 	if tile.terrain_id == -1: set_cell(cell, 0, tile.atlas_coord)
 
 func handle_block_destruction(cell : Vector2i, chunk_key : Vector2i, old_tile : Vector2i) -> void:
+
 	chunk_keys[chunk_key][cell] = TILES.air.atlas_coord
 	set_cell(cell, 0, TILES.air.atlas_coord)
 	ore_tilemap.set_cell(cell, 0, TILES.air.atlas_coord)
@@ -688,20 +689,14 @@ func handle_block_destruction(cell : Vector2i, chunk_key : Vector2i, old_tile : 
 	for tile_name in TILES:
 		var tile = TILES[tile_name]
 		if tile.atlas_coord == old_tile:
-			var dropped_item = DroppedItem.instantiate_dropped_item(load("res://inventory/resources/" + tile_name + ".tres"))
+			#var dropped_item = DroppedItem.instantiate_dropped_item(load("res://inventory/resources/" + tile_name + ".tres"))
+			var dropped_item : DroppedItem = DroppedItem.instantiate_dropped_item(ItemDatabase.get_item(tile_name))
 			dropped_item.global_position = cell * CELL_SIZE + Vector2i(CELL_SIZE / 4, CELL_SIZE / 4)
 			add_child(dropped_item)
 
-			#var grass_block_item = DroppedItem.instantiate_dropped_item(preload("res://inventory/resources/grass_block.tres"))
-			#grass_block_item.global_position = cell * CELL_SIZE + Vector2i(CELL_SIZE / 4, CELL_SIZE / 4)
-			#add_child(grass_block_item)
 			
 			
-			
-			
-			
-			
-			
+	
 func destroy_block(coord: Vector2) -> void:
 	var cell : Vector2i = local_to_map(coord)
 	var chunk_key : Vector2i = get_chunk_key(cell)
@@ -720,6 +715,7 @@ func destroy_block(coord: Vector2) -> void:
 				set_cell_terrain(n_cell, get_chunk_key(n_cell))
 
 func destroy_blocks(coords: Array[Vector2]) -> void:
+	return
 	var terrain_updates : Dictionary = {}  # terrain_id -> Dictionary acting as Set
 	var destroyed_cells : Array[Vector2i] = []
 
@@ -758,3 +754,14 @@ func destroy_blocks(coords: Array[Vector2]) -> void:
 		for cell in cell_array:
 			var chunk_key : Vector2i = get_chunk_key(cell)
 			set_cell_terrain(cell, chunk_key)
+
+
+
+# -- ChunkKeys -- #
+func save_chunk_keys(world_name : String) -> void:
+	var path : String = "user://worlds/%s/chunks/chunk_keys.save" % world_name
+	DataManager.save_data(chunk_keys, path)
+
+func load_chunk_keys(world_name : String) -> void:
+	var path : String = "user://worlds/%s/chunks/chunk_keys.save" % world_name
+	chunk_keys = DataManager.load_data(path)

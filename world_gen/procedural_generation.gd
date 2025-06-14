@@ -42,7 +42,7 @@ static func init_noise(SEED : int) -> void:
 	
 static var is_initialised : bool = false
 
-static func _generate_til2e(coord: Vector2i) -> Tile:
+static func _generate_til2e(coord: Vector2i) -> Tile:	
 	var y: int = coord.y
 	var cav : float = cavern.get_noise_2dv(coord)
 	var alt : float = altitude.get_noise_2dv(coord)
@@ -128,7 +128,7 @@ static func _generate_tile(coord: Vector2i) -> Tile:
 	assert (is_initialised==true, "GEN PROCEDURAL DOIT ETRE INIT")
 	var y: int = coord.y
 	var cav : float = cavern.get_noise_2dv(coord)
-	var alt : float = altitude.get_noise_2dv(Vector2i(coord.x, coord.y*0.00000000001))
+	var alt : float = altitude.get_noise_2dv(Vector2i(coord.x, coord.y*0.000000001))
 	
 	#alt frequency
 	#0.010
@@ -306,7 +306,7 @@ static func _generate_tile(coord: Vector2i) -> Tile:
 			if layer>0.5:
 				return TILES.abyss_fuel
 			if layer>0.25:
-				return TILES.autumn_leaf
+				return TILES.grass
 
 		# -- Couches externes des cavernes -- #		
 		elif cav > 0.3:

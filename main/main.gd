@@ -11,9 +11,9 @@ var world_instance : World = null
 var pause_menu : Control = null
 func _init() -> void:
 	ItemDatabase.initialise()
-	load_options()
-	VideoManager.set_screen_size(options["video"])
-	AudioManager.set_audio_volume(options["audio"])
+	DataManager.load_options()
+	VideoManager.set_screen_size(DataManager.options["video"])
+	AudioManager.set_audio_volume(DataManager.options["audio"])
 	
 func _ready() -> void:
 	go_to_menu()
@@ -35,11 +35,12 @@ func launch_pause_menu(parent_node : Node) -> void:
 	pause_menu.parent_node = parent_node
 	if parent_node is World:
 		pause_menu.connect("options_changed", world_instance.options_changed)
+		pause_menu.connect("save_and_quit", save_and_quit)
 	elif parent_node is MenuManager:
 		pause_menu.connect("show_menu_content", parent_node.show_menu_content)
 		parent_node.hide_menu_content()
 	
-	pause_menu.connect("save_and_quit", save_and_quit)
+	
 	canvas_layer.add_child(pause_menu)
 
 func _input(event : InputEvent) -> void:
@@ -59,51 +60,3 @@ func go_to_menu() -> void:
 	menu_instance.launch_pause_menu.connect(launch_pause_menu)
 	menu_instance.launch_world.connect(launch_world)
 	canvas_layer.add_child(menu_instance)
-
-
-
-## -------------------------------- FileManager --------------------------------
-
-# -- Option -- #
-
-static var options : Dictionary = {
-	"audio": {
-		"master": 10,
-		"sound": 5,
-		"music": 5
-	},
-	"video": {
-		"fullscreen": true,
-		"camera_zoom_type": 0,
-		"render_distance": 2,
-		"draw_chunk_borders" : true,
-	},
-	"langage": {
-		"current" :"fr",
-	},
-}
-
-
-static func save_options(path : String = "user://options.cfg") -> void:
-	print("save option")
-	print(options)
-	var config = ConfigFile.new()
-	for section in options.keys():
-		for key in options[section].keys():
-			config.set_value(section, key, options[section][key])
-	config.save(path)
-
-
-func load_options(path := "user://options.cfg") -> void:
-	print("load options")
-	var config = ConfigFile.new()
-	if config.load(path) != OK:
-		print("Fichier options.cfg introuvable, valeurs par défaut utilisées.")
-		return
-	
-	for section in options.keys():
-		for key in options[section].keys():
-			if config.has_section_key(section, key):
-				options[section][key] = config.get_value(section, key)
-
-	print(options)

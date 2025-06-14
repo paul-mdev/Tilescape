@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ctphpuncleji7" path="res://ui/background/background.tscn" id="2_qarx0"]
 [ext_resource type="PackedScene" uid="uid://vmc4p4w4m8mx" path="res://ui/themes/title.tscn" id="4_s2ko8"]
 
-[node name="Pause" type="Control"]
+[node name="Pause" type="Control" node_paths=PackedStringArray("save_btn")]
 process_mode = 3
 z_index = 1
 layout_mode = 3
@@ -16,6 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_0nfte")
 script = ExtResource("1_a3elu")
+save_btn = NodePath("PauseMenuContent/HBoxContainer/SaveBtn")
 
 [node name="UI-Background" parent="." instance=ExtResource("2_qarx0")]
 layout_mode = 1
@@ -68,11 +69,13 @@ alignment = 1
 
 [node name="Back" type="Button" parent="PauseMenuContent/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Back"
 
 [node name="SaveBtn" type="Button" parent="PauseMenuContent/HBoxContainer"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Save and quit"
 
 [connection signal="pressed" from="PauseMenuContent/AudioButton" to="." method="_on_audio_button_pressed"]

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://ui/menu/video-manager/video.gd" id="2_vg7rl"]
 [ext_resource type="PackedScene" uid="uid://vmc4p4w4m8mx" path="res://ui/themes/title.tscn" id="3_pnpps"]
 
-[node name="Video" type="Control"]
+[node name="Video" type="Control" node_paths=PackedStringArray("fullscreen_btn", "draw_chunk_btn", "render_distance_spin_box", "display_fps_btn", "display_coords_btn", "display_debug_btn")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,6 +13,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_d3nmi")
 script = ExtResource("2_vg7rl")
+fullscreen_btn = NodePath("VBoxContainer/AudioGridContainer/FullscreenBtn")
+draw_chunk_btn = NodePath("VBoxContainer/AudioGridContainer/DrawChunkBtn")
+render_distance_spin_box = NodePath("VBoxContainer/AudioGridContainer/HBoxContainer/RenderDistanceSpinBox")
+display_fps_btn = NodePath("VBoxContainer/AudioGridContainer/DisplayFps")
+display_coords_btn = NodePath("VBoxContainer/AudioGridContainer/DisplayCoords")
+display_debug_btn = NodePath("VBoxContainer/AudioGridContainer/DisplayDebug")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -50,7 +56,7 @@ text = "Draw chunk borders"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/AudioGridContainer"]
 layout_mode = 2
-theme_override_constants/separation = 300
+theme_override_constants/separation = 380
 
 [node name="Label" type="Label" parent="VBoxContainer/AudioGridContainer/HBoxContainer"]
 layout_mode = 2
@@ -58,6 +64,22 @@ text = "Render distance"
 
 [node name="RenderDistanceSpinBox" type="SpinBox" parent="VBoxContainer/AudioGridContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DisplayFps" type="CheckButton" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Display Fps"
+
+[node name="DisplayCoords" type="CheckButton" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Display coordinates"
+
+[node name="DisplayDebug" type="CheckButton" parent="VBoxContainer/AudioGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Display debug informations"
 
 [node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -67,4 +89,7 @@ text = "Back"
 [connection signal="pressed" from="VBoxContainer/AudioGridContainer/DrawChunkBtn" to="." method="_on_draw_chunk_btn_pressed"]
 [connection signal="changed" from="VBoxContainer/AudioGridContainer/HBoxContainer/RenderDistanceSpinBox" to="." method="_on_render_distance_spin_box_changed"]
 [connection signal="value_changed" from="VBoxContainer/AudioGridContainer/HBoxContainer/RenderDistanceSpinBox" to="." method="_on_render_distance_spin_box_value_changed"]
+[connection signal="pressed" from="VBoxContainer/AudioGridContainer/DisplayFps" to="." method="_on_display_fps_pressed"]
+[connection signal="pressed" from="VBoxContainer/AudioGridContainer/DisplayCoords" to="." method="_on_display_coords_pressed"]
+[connection signal="pressed" from="VBoxContainer/AudioGridContainer/DisplayDebug" to="." method="_on_display_debug_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

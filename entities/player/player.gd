@@ -8,6 +8,7 @@ class_name Player
 @onready var camera_2d_batch: Camera2D = $Camera2DBatch
 @onready var audio_footsteps: AudioStreamPlayer2D = $AudioFootsteps
 @export var hotbar: HBoxContainer
+@export var inventory : Control
 
 var direction : int
 var dir : String ="left"
@@ -48,6 +49,7 @@ var audio_stream_randomizer_destroy_blocks: AudioStreamRandomizer = AudioStreamR
 func _ready() -> void:
 	randomize()
 	ItemDatabase.initialise()
+	
 	
 	#add_child(audio_destroy_blocks)
 	# Configuration du randomizer
@@ -288,7 +290,7 @@ func _physics_process(delta : float) -> void:
 			audio_stream_randomizer
 	
 	play_animation()
-	if Input.is_action_just_pressed("clic_gauche"): shoot_projectile()
+	#if Input.is_action_just_pressed("clic_gauche"): shoot_projectile()
 	if Input.is_action_just_pressed("clic_gauche"):
 		is_angel = !is_angel
 		if is_angel: $Sprite2D.texture = preload("res://sprites/chester-angel.png")
@@ -311,14 +313,46 @@ func _physics_process(delta : float) -> void:
 	#$Dialogue.text=chaine
 
 
-@onready var action_bar = %ActionBar
-
-func _input(event):
+func _input(event) -> void:
 	if event.is_action_pressed("clic_droit"):
 		use_item()
  
-func add_item(item : Item, amount : int):
-	action_bar.add_item(item, amount)
+func add_item(item : Item, amount : int) -> void:
+	inventory.add_item(item, amount)
  
-func use_item():
-	action_bar.use_item()
+func use_item() -> void:
+	hotbar.use_item()
+	
+	
+static var player_data : Dictionary = {
+	"global_position": Vector2(0, -3000),
+	"inventory": {"grid" : {}, "hotbar" : {}},
+	"health": 3
+}	
+	
+# -- PlayerData -- #
+func save_player_data(world_name : String) -> void:
+	print("load_player_data")
+	var path : String = "user://worlds/%s/player_data.save" % world_name
+	player_data = {
+			"global_position": global_position,
+			"inventory": inventory.get_item_data(),
+			"health": 3  # remplacer par la vie du joueur
+		}
+	DataManager.save_data(player_data, path)
+	print("player data : ", player_data)
+	
+func load_player_data(world_name : String) -> void:
+	print("load_player_data")
+	var path : String = "user://worlds/%s/player_data.save" % world_name
+	player_data = DataManager.load_data(path)
+	if player_data.is_empty():
+		player_data = {
+			"global_position": Vector2(0, -3000),
+			"inventory": {"grid" : {},"hotbar" : {}},
+			"health": 3
+		}
+	print("player data : ", player_data)
+	global_position = player_data["global_position"]
+	
+	inventory.load_data()

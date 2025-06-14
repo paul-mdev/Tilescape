@@ -8,6 +8,7 @@ func _ready() -> void:
 	else:
 		amount = amount
 		item = item
+		
 # Slot
 @export var item : Item = null:
 	set(value):

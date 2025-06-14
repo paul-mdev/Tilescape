@@ -2,8 +2,8 @@ extends Node2D
 
 class_name World
 
-@onready var tilemap : TileMapLayer = $TileMap
-@onready var player : Player = $Player
+@export var tilemap : TileMapLayer
+@export var player : Player
 
 
 static var world_data: Dictionary ={
@@ -12,31 +12,29 @@ static var world_data: Dictionary ={
 	"seed": 1342721133
 }
 
-func _ready() -> void:
+static var world_name : String
+
+func _ready() -> void:	
 	# Initialisation des données
 	print("world_data : ", world_data)
+	world_name = world_data.world_name
+
 	ProceduralGen.init_noise(world_data.seed)
-	tilemap.chunk_keys = load_chunk_keys()
-	
-	var player_data : Dictionary = load_player_data()
-	print("player data : ", player_data)
-	player.global_position = player_data["global_position"]
-	
+	tilemap.load_chunk_keys(world_name)
+	player.load_player_data(world_name)
 	tilemap.camera = player.get_node("Camera2DBatch")
 	tilemap.update_loaded_chunks(3)
-	var camera_rect : Rect2 = tilemap.camera.get_global_camera_viewport_rect()
-	tilemap.render_visible_chunks(Camera.get_camera_extended_rect(camera_rect))
-	player.global_position = player_data["global_position"]
-	
+	tilemap.render_visible_chunks(Camera.get_camera_extended_rect(tilemap.camera.get_global_camera_viewport_rect()))
+
 
 func save_and_quit() -> void:
-	save_chunk_keys(tilemap.chunk_keys)
+	tilemap.save_chunk_keys(world_name)
 	save_world_data()
-	save_player_data()
+	player.save_player_data(world_name) 
 
 func options_changed() -> void:
-	tilemap.render_distance = Main.options["video"]["render_distance"]
-	tilemap.draw_chunk_borders = Main.options["video"]["draw_chunk_borders"]
+	tilemap.render_distance = DataManager.options["video"]["render_distance"]
+	tilemap.draw_chunk_borders = DataManager.options["video"]["draw_chunk_borders"]
 
 
 func _process(_delta : float) -> void:
@@ -62,8 +60,8 @@ func _draw() -> void:
 	draw_rect(Rect2(top_left, size), Color(0, 1, 0, 1), false, 1.5)
 
 
-@onready var mouse_coord_lbl: Label = $UI/InformationDisplay/UsefulPanel/Useful/MouseCoordLbl
-@onready var block_lbl: Label = $UI/InformationDisplay/UsefulPanel/Useful/BlockLbl
+@export var mouse_coord_lbl: Label
+@export var block_lbl: Label
 
 
 func handle_mouse() -> void:
@@ -80,14 +78,12 @@ func handle_mouse() -> void:
 	if tilemap.chunk_keys.has(chunk_key) and tilemap.chunk_keys[chunk_key].has(tile_pos):
 		tile_info = str(tilemap.chunk_keys[chunk_key][tile_pos])
 		
-		
-
-		#	print(tilemap.draw_key_as_ascii(tilemap.get_connect_key(tile_pos, tilemap.chunk_keys[chunk_key][tile_pos])))
+	#print(tilemap.draw_key_as_ascii(tilemap.get_connect_key(tile_pos, tilemap.chunk_keys[chunk_key][tile_pos])))
 		
 	block_lbl.text = tile_info + " tiles"
 
 	var selected_item = player.hotbar.get_selected_item()
-	if selected_item != null and selected_item.type == "Block":
+	if true:#selected_item != null and selected_item.type == "Block":
 		# Début de sélection avec Ctrl
 		if ctrl and (left_click or right_click):
 			if !is_selecting:
@@ -104,15 +100,17 @@ func handle_mouse() -> void:
 				tilemap.destroy_block(mouse_pos)
 				last_modified_coords[tile_pos] = true
 			elif right_click and not last_modified_coords.has(tile_pos):
-				var player_rect : Rect2 = player.get_bounding_rect()
-				var tile_origin : Vector2i = tilemap.map_to_local(tile_pos)
-				var tile_rect : Rect2 = Rect2(tile_origin, Vector2(tilemap.CELL_SIZE, tilemap.CELL_SIZE))
+				if selected_item != null and selected_item.type == "Block":
+					var player_rect : Rect2 = player.get_bounding_rect()
+					var tile_origin : Vector2i = tilemap.map_to_local(tile_pos)
+					var tile_rect : Rect2 = Rect2(tile_origin, Vector2(tilemap.CELL_SIZE, tilemap.CELL_SIZE))
 
-				if not tile_rect.intersects(player_rect):
-					tilemap.place_block(mouse_pos, Tiles.TILES.autumn_grass)
-					last_modified_coords[tile_pos] = true
-				else:
-					print("SKIP TILE AT: ", tile_pos, " intersects player")
+					if not tile_rect.intersects(player_rect):
+						print(selected_item.name)
+						tilemap.place_block(mouse_pos, Tiles.TILES[selected_item.name])
+						last_modified_coords[tile_pos] = true
+					else:
+						print("SKIP TILE AT: ", tile_pos, " intersects player")
 
 
 		# Fin de sélection avec Ctrl
@@ -132,13 +130,13 @@ func handle_mouse() -> void:
 						to_destroy.append(world_pos)
 						last_modified_coords[pos] = true
 
-					elif Input.is_action_just_released("clic_droit"):
+					elif Input.is_action_just_released("clic_droit") and selected_item != null and selected_item.type == "Block":
 						var player_rect : Rect2 = player.get_bounding_rect()
 						var tile_size : Vector2i = Vector2i(tilemap.CELL_SIZE, tilemap.CELL_SIZE)
 						var tile_rect : Rect2 = Rect2(world_pos - tile_size / 2.0, tile_size)
 
 						if not tile_rect.intersects(player_rect):
-							tilemap.place_block(world_pos, Tiles.TILES[selected_item.file_name]) #Tiles.TILES.abyss_fuel
+							tilemap.place_block(world_pos, Tiles.TILES[selected_item.name]) #Tiles.TILES.abyss_fuel
 							last_modified_coords[pos] = true
 						else:
 							print("SKIP TILE AT: ", pos, " intersects player")
@@ -178,49 +176,3 @@ static func create_world(world_name: String, SEED : int, created_at: String) -> 
 	save_world_data()
 	return world_data
 	
-	
-# -- DataManager -- #
-func save_data(data: Dictionary, path: String) -> void:
-	var file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
-	file.store_var(data)
-	file.close()
-
-func load_data(path: String) -> Dictionary:
-	if FileAccess.file_exists(path):
-		var file : FileAccess = FileAccess.open(path, FileAccess.READ)
-		var data : Dictionary = file.get_var()
-		file.close()
-		return data
-	else:
-		print("Aucun fichier trouvé à :", path)
-		return {}
-
-# -- ChunkKeys -- #
-func save_chunk_keys(chunk_keys: Dictionary) -> void:
-	var path : String = "user://worlds/%s/chunks/chunk_keys.save" % world_data.world_name
-	save_data(chunk_keys, path)
-
-func load_chunk_keys() -> Dictionary:
-	var path : String = "user://worlds/%s/chunks/chunk_keys.save" % world_data.world_name
-	return load_data(path)
-
-# -- PlayerData -- #
-func save_player_data() -> void:
-	var path : String = "user://worlds/%s/player_data.save" % world_data.world_name
-	var player_data : Dictionary = {
-			"global_position": player.global_position,
-			"inventory": {}, # remplacer par l'inventaire
-			"health": 3  # remplacer par la vie du joueur
-		}
-	save_data(player_data, path)
-
-func load_player_data() -> Dictionary:
-	var path : String = "user://worlds/%s/player_data.save" % world_data.world_name
-	var player_data : Dictionary = load_data(path)
-	if player_data.is_empty():
-		player_data = {
-			"global_position": Vector2(0, -3000),
-			"inventory": {},
-			"health": 3
-		}
-	return player_data

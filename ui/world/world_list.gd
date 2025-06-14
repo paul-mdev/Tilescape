@@ -4,7 +4,7 @@ class_name WorldList
 
 const CONTAINER : PackedScene = preload("res://ui/world/world_container.tscn")
 static var selected_container : WorldContainer = null
-
+static var world_name_list : Array = []
 func _ready() -> void:
 	var world_list : Array = load_all_worlds_data()
 	for world_data : Dictionary in world_list:
@@ -20,8 +20,8 @@ func load_all_worlds_data() -> Array:
 
 	dir.list_dir_begin()
 	var world_dir_name : String = dir.get_next()
-
 	while world_dir_name != "":
+		world_name_list.append(world_dir_name.to_lower())
 		if dir.current_is_dir() and world_dir_name != "." and world_dir_name != "..":
 			var world_path : String = base_path + "/" + world_dir_name + "/world.json"
 			if FileAccess.file_exists(world_path):
@@ -38,6 +38,7 @@ func load_all_worlds_data() -> Array:
 # --- DeleteWorld --- #
 
 func delete_world(world_name: String) -> void:
+	world_name_list.erase(world_name.to_lower())
 	print("delete world")
 	var dir_path : String = "user://worlds/%s" % world_name
 	var dir : DirAccess = DirAccess.open(dir_path)

@@ -1,5 +1,8 @@
 extends HBoxContainer
- 
+
+@export var items: Node2D
+@export var hand: Sprite2D
+
 @onready var slots : Array = get_children()
 @onready var slot_number : int = slots.size()
 signal index(i: int)
@@ -17,7 +20,6 @@ var current_index : int:
 				hand.scale = Vector2(1, 1)
 		else: hand.texture = null
 		
-@onready var hand: Sprite2D = $"../../Hand"
 func _ready():
 	current_index = 0
 	
@@ -43,28 +45,20 @@ func _input(event):
 		else:
 			current_index -= 1
  
-func add_item(item : Item, amount):
-	for slot in slots:
-		if slot.item == null:
-			slot.item = item
-			slot.amount = amount
-			return
-	# inventaire plein attention
-	
-@onready var items: Node2D = $"../../Items"
-
 func use_item():
 	var selected_slot = get_selected_slot()
 	if selected_slot.item != null:
 		if selected_slot.node == null:
-			#var file_name : String = selected_slot.item.resource_path.get_file().get_basename()
-			#print("file name : ", file_name)
-			var node = load("res://inventory/items/" + selected_slot.item.file_name + "/" + selected_slot.item.file_name + ".tscn").instantiate()
-			node.item = selected_slot.item
-			items.add_child(node)
-			selected_slot.node = node
-
-		selected_slot.node.use_item()
+			
+			if selected_slot.item.type != "Block":
+				print(selected_slot.item.file_name)
+				var node = load("res://inventory/items/" + selected_slot.item.file_name + "/" + selected_slot.item.file_name + ".tscn").instantiate()
+				node.item = selected_slot.item
+				items.add_child(node)
+				selected_slot.node = node
+		
+		if selected_slot.item.type != "Block":
+			selected_slot.node.use_item()
 
 
 func get_selected_slot():
@@ -72,9 +66,3 @@ func get_selected_slot():
 
 func get_selected_item():
 	return get_selected_slot().item
-
-
-func _process(delta: float) -> void:
-	var n = 0
-	for slot in slots: if slot.item != null: n+=1
-	#print("number of item in hotbar : ", n)

@@ -1,6 +1,7 @@
 extends Node
 
 class_name Tiles
+const TILE_SIZE : int = 16
 
 static var TILES : Dictionary = {
 	# tiles

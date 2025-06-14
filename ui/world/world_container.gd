@@ -31,9 +31,8 @@ func _gui_input(event : InputEvent) -> void:
 		emit_signal("select_world", self)
 
 func set_selected(selected: bool) -> void:
-	if selected: modulate = Color(0.3, 0.8, 1.0)
+	if selected: modulate = Color(1, 0.757, 0.027)# Color(0.3, 0.8, 1.0)
 	else: modulate = Color(1, 1, 1)
-
 
 @onready var delete_confirm : ConfirmationDialog = $DeleteConfirmationDialog
 func _on_delete_world_btn_pressed() -> void:

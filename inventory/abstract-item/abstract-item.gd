@@ -6,10 +6,6 @@ class_name AbstractItem
 var item: Item = null:
 	set(value):
 		item = value
- #
-		#if value != null:
-			##texture = value.icon
-			#item.connect("item_used", use_item)
- 
+
 func use_item():
 	print("abstract : use item " + item.name)

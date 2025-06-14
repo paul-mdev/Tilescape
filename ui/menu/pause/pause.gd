@@ -4,13 +4,14 @@ signal save_and_quit
 signal options_changed
 signal show_menu_content
 @onready var pause_menu_content: VBoxContainer = $PauseMenuContent
-
+@export var save_btn : Button
 func make_save_btn_visible() -> void:
 	$PauseMenuContent/HBoxContainer/SaveBtn.visible=true
 
 var parent_node : Node = null
 
 func _ready() -> void:
+	save_btn.visible = false
 	get_tree().paused = true
 	assert (parent_node!= null, "Le parent de pause menu doit être assigné")
 	if parent_node is World: make_save_btn_visible()

@@ -11,11 +11,12 @@ signal add_container
 @onready var generate : VBoxContainer = $MenuContent/GenerateWorld
 @onready var play : VBoxContainer = $MenuContent/PlayWorld
 @onready var menu_content: VBoxContainer = $MenuContent
-
+@export var seed_box : SpinBox
+@export var warning_message : Label
 @export var default_color : Color = Color(255,0,0)
 
-func set_default_theme(node : Node) -> void:
-	return
+#set_default_theme(self)
+#func set_default_theme(node : Node) -> void:
 	#if node is Label or node is TextEdit or node is Button:
 		#var new_theme := Theme.new()
 		#new_theme.set_color("font_color", "Label", default_color)
@@ -28,13 +29,14 @@ func set_default_theme(node : Node) -> void:
 
 func _ready() -> void:
 	WorldList.selected_container = null
-	set_default_theme(self)
+	seed_box.value = randi()
+	warning_message.visible = false
 	self.connect("add_container", world_list.add_container)
 	menu.show()
 	play.hide()
 	generate.hide()
 	$Music.play()
-	
+
 
 @onready var camera : Camera2D = $Camera2D
 func _on_play_btn_pressed() -> void:
@@ -50,6 +52,10 @@ func _on_play_cancel_btn_pressed() -> void:
 	
 func _on_generate_btn_pressed() -> void:
 	play.hide()
+	seed_box.value = randi()
+	warning_message.visible = false
+	$MenuContent/GenerateWorld/WorldBoxContainer/WorldNameTextEdit.text = ""
+
 	generate.show()
 
 func _on_generate_cancel_btn_pressed() -> void:
@@ -69,30 +75,34 @@ func _on_play_world_btn_pressed() -> void:
 func _on_generate_world_btn_pressed() -> void:
 	var world_name : String = generate.get_node("WorldBoxContainer/WorldNameTextEdit").text
 	if (world_name == ""): world_name = "New world"
-		
-	var SEED : int = generate.get_node("SeedBoxContainer/SeedBox").value
-	var date_info : Dictionary = Time.get_date_dict_from_system()
-	var formatted_date : String = "%02d/%02d/%04d" % [date_info.day, date_info.month, date_info.year]
+
+	if world_name.to_lower() in WorldList.world_name_list:
+		warning_message.visible = true
+	else:
+		warning_message.visible = false
 	
-	var world_data : Dictionary = World.create_world(world_name, SEED, formatted_date)
-	emit_signal("add_container", world_data)
-	play.show()
-	generate.hide()
+		var SEED : int = seed_box.value
+		var date_info : Dictionary = Time.get_date_dict_from_system()
+		var formatted_date : String = "%02d/%02d/%04d" % [date_info.day, date_info.month, date_info.year]
+		
+		var world_data : Dictionary = World.create_world(world_name, SEED, formatted_date)
+		WorldList.world_name_list.append(world_name.to_lower())
+		emit_signal("add_container", world_data)
+		play.show()
+		generate.hide()
 
 func _on_button_pressed() -> void:
 	var win : Window = get_viewport()
 	win.size = Vector2(640, 360)
 	DisplayServer.window_set_size(win.size)
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	set_default_theme(self)
 
 func _on_button_2_pressed() -> void:
 	var win : Window = get_viewport()
 	win.size = Vector2(1280, 720)
 	DisplayServer.window_set_size(win.size)
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	set_default_theme(self)
-	
+
 func _on_button_3_pressed() -> void:
 	DisplayServer.window_set_size(get_viewport().get_max_size())
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
